@@ -72,10 +72,10 @@ then
     PATH_OUT=$(pwd)
 fi
 
-# if [ -z $YEARS ]
-# then
-#     for y in {08..$(date+"%y")}; do YEARS+=$y; done
-# fi
+if [ -z $YEARS ]
+then
+    for y in `eval echo {08..$(date +'%y')}`; do YEARS+=($y); done
+fi
 
 if [ -z $MONTHS ]
 then
