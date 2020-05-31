@@ -5,14 +5,14 @@ GRE="\e[32m"
 CLS="\e[0m"
 
 helpMessage() {
-   echo "Usage: `basename $0` -s source -t file_type [options ...][-hv]"
+   echo "Usage: `basename $0` -s source -t file_type [-options ...][-hv]"
    echo "Options:"
    echo -e "\ts: source"
    echo -e "\tt: file type"
-   echo -e "\ty: year aa"
-   echo -e "\tm: month mm"
-   echo -e "\tr: regions"
-   echo -e "\to: path for output files"
+   echo -e "\ty: year aa, optional, default 08 to `date +'%y'`"
+   echo -e "\tm: month mm, optional, default all months"
+   echo -e "\tr: regions, optional, default all regions"
+   echo -e "\to: path for output files, optional, default current path"
    echo -e "\th: see this message"
    echo -e "\tv: get software version"
    echo "Sources:"
@@ -35,6 +35,13 @@ helpMessage() {
    echo -e "\t\tRD: AIH Reduzidas"
    echo -e "\t\tRJ: AIH Rejeitadas"
    echo -e "\t\tSP: Serviços Profissionais"
+   echo "Examples:"
+   echo -e "\t`basename $0` -s SIHSUS -t RD"
+   echo -e "\t`basename $0` -s SIHSUS -t RD -o output/"
+   echo -e "\t`basename $0` -s SIHSUS -t RD -y 08 -y 09"
+   echo -e "\t`basename $0` -s SIHSUS -t RD -y 08 -y 09 -m 01"
+   echo -e "\t`basename $0` -s SIHSUS -t RD -y 08 -y 09 -m 01 -r BA"
+   echo -e "\t`basename $0` -s SIHSUS -t RD -y -r BA"
    exit
 }
 
@@ -105,7 +112,7 @@ do
         do
             file="${FILE_TYPE}${region}${year}${month}.dbc"
             curl -o "${p_out}/${file}" \
-                "ftp://ftp.datasus.gov.br/dissemin/publicos/SIHSUS/200801_/Dados/${file}"
+                "ftp://ftp.datasus.gov.br/dissemin/publicos/${SOURCE}/200801_/Dados/${file}"
             echo -e "[${GRE} OK ${CLS}] ${file}"
         done
     done
