@@ -79,6 +79,12 @@ then
     PATH_OUT=$(pwd)
 fi
 
+if [ ! -d $PATH_OUT ]
+then
+    echo "Directory $PATH_OUT DOES NOT exists."
+    exit
+fi
+
 if [ -z $YEARS ]
 then
     for y in `eval echo {08..$(date +'%y')}`; do YEARS+=($y); done
